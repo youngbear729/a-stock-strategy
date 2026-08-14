@@ -1,13 +1,22 @@
 @echo off
+setlocal
 chcp 65001 >nul
-cd /d "D:\a股突破形态做趋势"
+cd /d "%~dp0"
 
-REM ========== 配置区域 ==========
-REM 替换为你的飞书Webhook地址
-set FEISHU_WEBHOOK=https://open.feishu.cn/open-apis/bot/v2/hook/39c3de44-639c-4f8d-8584-53e3304519c2
+if not exist ".venv\Scripts\python.exe" (
+    echo [错误] 未找到 .venv，请先安装项目依赖。
+    exit /b 1
+)
+
+if "%FEISHU_WEBHOOK%"=="" (
+    echo [提示] 未设置 FEISHU_WEBHOOK，本次只在本机输出信号。
+)
 
 REM ========== 运行监控 ==========
-python realtime_monitor.py --force
+".venv\Scripts\python.exe" -u realtime_monitor.py --force
+set "EXIT_CODE=%ERRORLEVEL%"
 
 REM 暂停查看结果（可选）
 REM pause
+
+exit /b %EXIT_CODE%
