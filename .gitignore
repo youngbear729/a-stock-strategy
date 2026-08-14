@@ -1,4 +1,5 @@
 # Python
+.venv/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -25,6 +26,7 @@ web/*.js
 !web/index.html
 
 # 临时文件
+outputs/
 *.tmp
 *.log
 monitor_state.json
